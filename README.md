@@ -6,7 +6,7 @@
 
 ### Use in this project
   - JS
-   - DOM
-   - Swich case
-   - click events
+     - DOM
+     - Swich case
+     - click events
   - SCSS
