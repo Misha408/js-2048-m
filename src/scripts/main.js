@@ -146,11 +146,10 @@ function moveLeft() {
   checkChange = [];
 
   for (let i = 0; i < 4; i++) {
-    const row = document.querySelectorAll('.field-row')[i];
-    const cells = row.querySelectorAll('.field-cell');
-    checkChange.push(row)
+    const row = document.querySelectorAll(`.field-row:nth-child(${i + 1}) .field-cell`);
+    checkChange.push(Array.from(row).map(cell => parseInt(cell.textContent) || 0))
 
-    move(cells, 0);
+    move(row, 0);
   }
 
   checkRowChanges();
@@ -161,12 +160,10 @@ function moveRight() {
   checkChange = [];
 
   for (let i = 0; i < 4; i++) {
-    const row = document.querySelectorAll('.field-row')[i];
-    const cells = row.querySelectorAll('.field-cell');
+    const row = document.querySelectorAll(`.field-row:nth-child(${i + 1}) .field-cell`);
+    checkChange.push(Array.from(row).map(cell => parseInt(cell.textContent) || 0))
 
-    checkChange.push(row)
-
-    move(cells, 1);
+    move(row, 1);
   }
 
   checkRowChanges();
@@ -180,7 +177,7 @@ function moveUp() {
     const column = document
       .querySelectorAll(`.field-row .field-cell:nth-child(${i + 1})`);
 
-    checkChange.push(column)
+    checkChange.push(Array.from(column).map(cell => parseInt(cell.textContent) || 0));
 
     move(column, 0);
   }
@@ -196,13 +193,12 @@ function moveDown() {
     const column = document
       .querySelectorAll(`.field-row .field-cell:nth-child(${i + 1})`);
 
-    checkChange.push(column)
+    checkChange.push(Array.from(column).map(cell => parseInt(cell.textContent) || 0));
 
     move(column, 1);
   }
 
   checkColumnChanges()
-
   messageText();
 }
 
@@ -228,7 +224,7 @@ const checkColumnChanges = () => {
     const column = document
       .querySelectorAll(`.field-row .field-cell:nth-child(${i + 1})`);
 
-    newChange.push(Array.from(column).map(cell => parseInt(cell.textContent)));
+    newChange.push(Array.from(column).map(cell => parseInt(cell.textContent) || 0));
   }
 
   if (!checkChanges(checkChange, newChange)) {
@@ -240,10 +236,13 @@ const checkRowChanges = () => {
   let newChange = [];
 
   for (let i = 0; i < 4; i++) {
-    const row = document.querySelectorAll('.field-row')[i];
+    const row = document.querySelectorAll(`.field-row:nth-child(${i + 1}) .field-cell`);
 
-    newChange.push(Array.from(row).map(cell => parseInt(cell.textContent)));
+    newChange.push(Array.from(row).map(cell => parseInt(cell.textContent) || 0));
+    
   }
+
+  console.log(checkChange, newChange)
 
   if (!checkChanges(checkChange, newChange)) {
     generateNewCeil();
